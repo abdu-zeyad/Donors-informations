@@ -2,7 +2,7 @@
 
 const form = document.getElementById('donatingform')
 const table = document.getElementById('donatingtable')
-
+let total=0;
 Donor.array=[];
 function Donor(name,amount){
     this.name=name;
@@ -10,7 +10,6 @@ function Donor(name,amount){
     Donor.array.push(this);
 
 }
-console.log(Donor.array);
 
 Donor.prototype.getAge = function(){
     this.age =Math.floor( Math.random() * (30 - 18) + 18);
@@ -27,7 +26,8 @@ function submitform(event) {
     let newdonor = new Donor(name,amount)
     newdonor.getAge();
     render();
- console.log(donor);
+    save();
+    getData()
 }
 
 form.addEventListener('submit',submitform)
@@ -68,19 +68,44 @@ function render() {
         row.appendChild(cell3)
 
         cell3.textContent=Donor.array[i].amount
+        let integer = parseInt(Donor.array[i].amount);
+       
+         total = total + integer
+           
     }
+
+    const footer = document.createElement('tr');
+        table.appendChild(footer)
+
+        const cell11 = document.createElement('td')
+        footer.appendChild(cell11)
+        cell11.textContent=''
+
+        const cell21 = document.createElement('td')
+        footer.appendChild(cell21)
+
+        
+        cell21.textContent=total;
+
+        const cell31 = document.createElement('td')
+        footer.appendChild(cell31)
+        cell31.textContent=''
+    console.log(Donor.array);
+
 }
 
 
-// function save() {
-//     let saved = JSON.stringify(Donor.array)
-//     localStorage.setItem('savedData',saved)
+function save() {
+    let saved = JSON.stringify(Donor.array)
+    localStorage.setItem('savedData',saved)
     
-// }
-// function getData() {
-//     let data = localStorage.getItem('savedData')
-//     let convers = JSON.parse(data)
-//     if (convers!== null) {
-//      converse = Donor.array
-//     }
-// }
+}
+function getData() {
+    let data = localStorage.getItem('savedData')
+    let convers = JSON.parse(data)
+    if (convers!== null) {
+     convers = Donor.array
+    }
+    console.log(data);
+    console.log(convers);
+}
